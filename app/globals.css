@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+@plugin 'daisyui' {
+  themes: dark --default;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -22,5 +30,28 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+input,
+textarea {
+  color-scheme: dark;
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
 }
