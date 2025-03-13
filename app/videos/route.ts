@@ -1,12 +1,12 @@
 import { authOptions } from "@/lib/auth";
-import { conntectToDB } from "@/lib/db";
+import { connectToDB } from "@/lib/db";
 import Video, { IVideo } from "@/models/Video";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        conntectToDB()
+        connectToDB()
         const videos = await Video.find({}).sort({ createdAt: -1 }).lean()
         if (!videos || videos.length === 0) {
             return NextResponse.json([], { status: 200 })
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
                 { status: 401 }
             )
         }
-        await conntectToDB()
+        await connectToDB()
         const body: IVideo = await request.json()
 
         if (
