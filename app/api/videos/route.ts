@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { connectToDatabase } from "@/lib/db";
+import { connectToDB } from "@/lib/db";
 import Video, { IVideo } from "@/models/Video";
 
 export async function GET() {
   try {
-    await connectToDatabase();
+    await connectToDB();
     const videos = await Video.find({}).sort({ createdAt: -1 }).lean();
 
     if (!videos || videos.length === 0) {
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await connectToDatabase();
+    await connectToDB();
     const body: IVideo = await request.json();
 
     // Validate required fields
